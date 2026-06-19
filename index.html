@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Artifacts — Test Page</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; }
+.header { padding: 32px; text-align: center; border-bottom: 1px solid #222; }
+.header h1 { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header p { color: #888; margin-top: 8px; font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 32px; max-width: 1200px; margin: 0 auto; }
+.card { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 24px; transition: all 0.2s; }
+.card:hover { border-color: #444; transform: translateY(-2px); }
+.card-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.card-value { font-size: 32px; font-weight: 700; }
+.card-change { font-size: 13px; margin-top: 4px; }
+.up { color: #22c55e; }
+.down { color: #ef4444; }
+.neutral { color: #888; }
+.bar-chart { margin-top: 16px; }
+.bar-row { display: flex; align-items: center; margin-bottom: 8px; }
+.bar-label { width: 80px; font-size: 12px; color: #888; }
+.bar-track { flex: 1; height: 8px; background: #1a1a1a; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+.bar-value { width: 60px; text-align: right; font-size: 12px; color: #aaa; }
+.section-title { padding: 0 32px; max-width: 1200px; margin: 32px auto 0; font-size: 18px; font-weight: 600; }
+.footer { text-align: center; padding: 32px; color: #555; font-size: 12px; border-top: 1px solid #1a1a1a; margin-top: 48px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ Hermes Artifacts</h1>
+  <p>Interactive dashboards powered by Hermes Agent</p>
+</div>
+
+<div class="section-title">Crypto Market Overview</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-label">Bitcoin (BTC)</div>
+    <div class="card-value">$104,521</div>
+    <div class="card-change up">▲ 2.3% (24h)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Ethereum (ETH)</div>
+    <div class="card-value">$2,518</div>
+    <div class="card-change up">▲ 1.8% (24h)</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Total Market Cap</div>
+    <div class="card-value">$3.37T</div>
+    <div class="card-change up">▲ 1.5%</div>
+  </div>
+  <div class="card">
+    <div class="card-label">24h Volume</div>
+    <div class="card-value">$89.2B</div>
+    <div class="card-change down">▼ 5.1%</div>
+  </div>
+</div>
+
+<div class="section-title">Top Gainers (24h)</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="bar-chart" id="gainers"></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Sentiment</div>
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:48px;">🟢</div>
+      <div style="font-size:20px;font-weight:700;margin-top:8px;color:#22c55e;">Greed</div>
+      <div style="font-size:13px;color:#888;margin-top:4px;">Fear & Greed Index: 72</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Built with Hermes Agent · Data is illustrative only (not real-time)
+</div>
+
+<script>
+const gainers = [
+  { name: 'PEPE', pct: 42.1 },
+  { name: 'WIF', pct: 28.5 },
+  { name: 'FET', pct: 23.7 },
+  { name: 'RNDR', pct: 19.2 },
+  { name: 'INJ', pct: 15.8 },
+  { name: 'TIA', pct: 12.4 },
+];
+
+const container = document.getElementById('gainers');
+const maxPct = Math.max(...gainers.map(g => g.pct));
+
+gainers.forEach(g => {
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML = `
+    <span class="bar-label">${g.name}</span>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${(g.pct/maxPct)*100}%;background:linear-gradient(90deg,#22c55e,#4ade80);"></div>
+    </div>
+    <span class="bar-value up">+${g.pct}%</span>
+  `;
+  container.appendChild(row);
+});
+</script>
+
+</body>
+</html>
